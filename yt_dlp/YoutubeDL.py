@@ -3548,6 +3548,9 @@ class YoutubeDL:
             return
         # Future-proof against any change in case
         # and backwards compatibility with prior versions
+        uploader = info_dict.get('uploader')
+        if not uploader:
+            return
         extractor = info_dict.get('extractor_key') or info_dict.get('ie_key')  # key in a playlist
         if extractor is None:
             url = str_or_none(info_dict.get('url'))
@@ -3560,7 +3563,7 @@ class YoutubeDL:
                     break
             else:
                 return
-        return f'{extractor.lower()} {video_id}'
+        return f'{extractor} {uploader} video-{video_id}'
 
     def test_filename_external(self, filename):
         cmd = self.params.get('test_filename')
